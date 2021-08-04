@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  database:
+    image: mariadb:10.6.3-focal
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: db_pass
+    volumes:
+      - ~/Desktop/Jewelify_project/mariadb:/var/lib/mysql
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: ["./wait-for-it.sh", "database:3306", "--", "yarn", "run:worker"]
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 3306
+    depends_on:
+      - database
+
+  server:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    command: ["./wait-for-it.sh", "database:3306", "--", "yarn", "run:server"]
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 3306
+    depends_on:
+      - database
+      - worker
+
+  storefront:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    network_mode: host
+

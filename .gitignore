@@ -1,0 +1,12 @@
+# Database
+mariadb/
+
+# Try On feature
+try_on_integration/env/
+try_on_integration/__pycache__/
+
+# backend
+backend/node_modules/
+
+# frontend
+frontend/node_modules/
