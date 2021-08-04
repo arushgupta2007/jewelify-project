@@ -4,7 +4,16 @@ This repository contains the source code for the Jewelify project. This project 
 
 ## Table of contents
 
-${toc}
+- [Installation](#installation)
+    + [Prerequisites](#prerequisites)
+    + [Steps](#steps)
+- [Usage](#usage)
+- [How does this work?](#how-does-this-work)
+    + [Database](#database)
+    + [Worker and server](#worker-and-server)
+    + [Storefront](#storefront)
+    + [Try On Integration](#try-on-integration)
+- [Deploy](#deploy)
 
 ## Installation
 
