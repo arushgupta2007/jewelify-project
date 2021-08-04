@@ -4,6 +4,7 @@ mariadb/
 # Try On feature
 try_on_integration/env/
 try_on_integration/__pycache__/
+try_on_integration/models/shape_predictor_68_face_landmarks.dat
 
 # backend
 backend/node_modules/

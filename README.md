@@ -1,6 +1,6 @@
 # Jewelify Project
 
-This repository contains the source code for the Jewelify project. This project is an e-commerce application for jewelry. The main feature of this project is (would) be to virtually try any choosen jewelry on the user, using the camera.
+This repository contains the source code for the Jewelify project. This project is an e-commerce application for jewelry. The main feature of this project is (would) be to virtually try any chosen jewelry on the user, using the camera.
 
 ## Table of contents
 
@@ -104,7 +104,7 @@ Note: This installation process is for development only, **NOT** for production
             network_mode: host
     ```
 
-3. Run the conatiners! In the root directory, run:
+3. Run the containers! In the root directory, run:
     ```sh
     docker-compose up --build
     ```
@@ -218,7 +218,7 @@ Note: This installation process is for development only, **NOT** for production
         docker ps | grep mariadb | awk {print $1}
         ```
         This command gets all the running conatiners, then finds the one running the mariadb image, the prints out the first column (The ID)
-    3. Use the `dump.sql` file to populate the database with data. In GNU/Linux, the comand is:
+    3. Use the `dump.sql` file to populate the database with data. In GNU/Linux, the command is:
         ```sh
         docker exec -i $(docker ps | grep mariadb | awk {print $1}) sh -c 'exec mysql -uroot -pdb_pass' < dump.sql
         ```
@@ -275,12 +275,12 @@ database:
 ```
 
 The database we will be using is [MariaDB](https://mariadb.org/). The docker image for MariaDB is hosted [here](https://hub.docker.com/_/mariadb). \
-The environment variable `MYSQL_ROOT_PASSWORD` is resposible to set the root user's password (for the database). Using the volume, data is stored on the host machine, so even if you kill the docker conatiner, the data is not lost. The next time you start the docker container, you start of where you left! \
+The environment variable `MYSQL_ROOT_PASSWORD` is responsible to set the root user's password (for the database). Using the volume, data is stored on the host machine, so even if you kill the docker container, the data is not lost. The next time you start the docker container, you start of where you left! \
 The reason MariaDB is used, is MySQL does not play nicely with docker. Also, MariaDB aims to compatible with MySQL, so you would not have any issues if you are familiar with MySQL.
 
-#### Woker and server
+#### Worker and server
 
-The worker's and server's conatiners are both built from `frontend/Dockerfile`. Take a look at this file:
+The worker's and server's containers are both built from `frontend/Dockerfile`. Take a look at this file:
 
 ```yaml
 FROM node:14
@@ -296,12 +296,12 @@ RUN chmod +x /usr/src/Jewelify_project/wait-for-it.sh
 
 It uses the node 14 base image (as that is the node version the vendure server and vendure storefront are compatible with).
 Then it sets the working dir.
-Then it copies the `package.json` and `yarn.lock` file, to install all dependencies. Then it copies over all other files. Then, it changes the persions of the `wait-for-it.sh` script to executable. This script was got from [this example repo](https://github.com/vendure-ecommerce/vendure-docker-compose)
+Then it copies the `package.json` and `yarn.lock` file, to install all dependencies. Then it copies over all other files. Then, it changes the permissions of the `wait-for-it.sh` script to executable. This script was got from [this example repo](https://github.com/vendure-ecommerce/vendure-docker-compose)
 Lastly, the default command is set using the docker compose.
 
 #### Storefront
 
-The Storefront's conatiners are built from `backend/Dockerfile`. Let's have a look:
+The Storefront's containers are built from `backend/Dockerfile`. Let's have a look:
 
 ```yaml
 FROM node:14
@@ -344,7 +344,17 @@ Currently, the storefront access the API to the server at `http://localhost:3000
 
 #### Try On Integration
 
-This is currently non functional. It is planned to open a HTTP API so the Storefront can access. This is the backend for the Try On feature.
+This is currently non functional.
+It is planned to open a HTTP API so the Storefront can access.
+This is the backend for the Try On feature. \
+
+Do get `shape_predictor_68_face_landmarks.dat` from [here](https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat) and put it in `try_on_integration/models/`. \
+It is also recommended to set up a [virtual environment](https://docs.python.org/3/library/venv.html) for python. \
+The requirements can be installed through `requirements.txt` in `try_on_integration/`. In `try_on_integration`, run:
+
+```sh
+pip install -r requirements.txt
+```
 
 ## Deploy
 
